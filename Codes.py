@@ -6,6 +6,7 @@ from qiskit import QuantumCircuit, transpile
 from qiskit.visualization import plot_histogram
 from qiskit_textbook.tools import simon_oracle
 
+#to draw the circuit for b = 1001
 b = '1001'
 
 n = len(b)
@@ -28,3 +29,21 @@ simon_circuit.h(range(n))
 # Measure qubits
 simon_circuit.measure(range(n), range(n))
 simon_circuit.draw()
+
+#to run the simulator for the above
+
+# use local simulator
+aer_sim = Aer.get_backend('aer_simulator')
+results = aer_sim.run(simon_circuit).result()
+counts = results.get_counts()
+plot_histogram(counts)
+
+# Calculate the dot product of the results
+def bdotz(b, z):
+    accum = 0
+    for i in range(len(b)):
+        accum += int(b[i]) * int(z[i])
+    return (accum % 2)
+
+for z in counts:
+    print( '{}.{} = {} (mod 2)'.format(b, z, bdotz(b,z)) )
