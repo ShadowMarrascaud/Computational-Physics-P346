@@ -47,3 +47,4 @@ def bdotz(b, z):
 
 for z in counts:
     print( '{}.{} = {} (mod 2)'.format(b, z, bdotz(b,z)) )
+
